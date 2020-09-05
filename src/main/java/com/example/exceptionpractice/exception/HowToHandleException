@@ -1,0 +1,29 @@
+Here is a note for how to handle exceptions
+
+To handle exceptions, there are several ways to do it.
+This time, the way to create a custom exception and handle it is described.
+
+Steps for exception handling (global exception handler)
+
+1. Create a class that defines a new exception class
+    - with a name of exception that you want to throw
+    - to tell SpringBoot that this is one of exceptions,
+        extend an exception class that already exists
+
+2. Create a class that holds the fields (the content of the exception that you created above)
+    - this class is to define the content of your exception
+    - common fields are message, http status, timestamp, and so on.
+    - since it is going to be initialized when the exception is thrown, add a constructor(s)
+    - to obtain information that the exception carries, add getter methods
+
+3. Create a class that actually handles the exception thrown
+    - with an exception name and 'handler' at the end to show this deals with exceptions
+    - add @ControllerAdvice annotation so that this class handles exceptions
+        thrown from component classes (service, controller, and etc...)
+    - create a method that deals with the arg of the exception
+        - here, you can customize the behavior of responses.
+            - return values as a response body (ResponseEntity), probably most common way to do it
+            - just return String value
+    - on the method you created above, add @ExceptionHandler(YourExceptionName.class)
+        to tell SpringBoot that the exception class is handled in this method
+    
